@@ -1,5 +1,5 @@
 {
-    "name": "kelvineducation/the-framework-php",
+    "name": "lightster/the-framework-php",
     "description": "The Framework",
     "type": "library",
     "license": "AGPL-3.0",
@@ -14,7 +14,7 @@
         }
     ],
     "support": {
-      "email": "hello@kelvin.education"
+      "email": "matt@paren.io"
     },
     "scripts": {
       "compile": "./bin/the assets:compile"
