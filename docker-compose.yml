@@ -12,10 +12,30 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
-  php:
+  php7.3:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      args:
+        PHP_VERSION: 7.3
+    restart: "no"
+    volumes:
+      - .:/app
+      - ~/.composer:/root/.composer
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 9000
+    environment:
+      - APP_ENV
+      - BASE_URL
+      - DATABASE_URL
+
+  php8.0:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        PHP_VERSION: 8.0.3
     restart: "no"
     volumes:
       - .:/app

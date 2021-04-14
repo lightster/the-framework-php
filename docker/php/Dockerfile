@@ -1,4 +1,5 @@
-FROM php:8.0.3-alpine
+ARG PHP_VERSION=8.0.3
+FROM php:${PHP_VERSION}-alpine
 
 # bcmath is for phpunit
 # coreutils is for sha384sum
