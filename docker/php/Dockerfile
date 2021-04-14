@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine
+FROM php:8.0.3-alpine
 
 # bcmath is for phpunit
 # coreutils is for sha384sum
