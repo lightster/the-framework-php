@@ -25,8 +25,10 @@ class WebContext extends AppContext
 
     public function handleServerError(\The\ResponseWriterInterface $w, \Throwable $e)
     {
-        $honeybadger = option('honeybadger');
-        $honeybadger->notify($e);
+        if ($exception_reporter = option('exception_reporter')) {
+            $exception_reporter($e);
+        }
+
         html($w, 'error.phtml', 'error_layout.phtml', [
             'e'      => $e,
             'is_dev' => getenv('APP_ENV') === ENV_DEVELOPMENT
