@@ -156,7 +156,7 @@ SQL;
      * @throws DbException
      * @throws ModelException
      */
-    public static function fetchAllWhere(string $where, array $params = []): array
+    public static function fetchAllWhere(string $where, array $params = [], string $order_by = ''): array
     {
         if (empty(trim($where))) {
             throw new ModelException(sprintf(
@@ -165,12 +165,15 @@ SQL;
             ));
         }
 
+        $order_by_sql = ($order_by ? "ORDER BY {$order_by}" : '');
+
         $sql = <<<SQL
 SELECT *
 FROM %s
 WHERE %s
+%s
 SQL;
-        $sql = sprintf($sql, static::$table_name, $where);
+        $sql = sprintf($sql, static::$table_name, $where, $order_by_sql);
         $res = self::db()->query($sql, $params);
         $models = [];
         while ($row = $res->fetchRow()) {
