@@ -2,6 +2,8 @@
 
 namespace The;
 
+use Exception;
+
 class Response implements ResponseWriterInterface
 {
     /**
@@ -23,6 +25,11 @@ class Response implements ResponseWriterInterface
      * @var array
      */
     private $session = [];
+
+    /**
+     * @var array
+     */
+    private $cookies = [];
 
     /**
      * @param int $code
@@ -70,6 +77,34 @@ class Response implements ResponseWriterInterface
         $this->session[$key] = $value;
     }
 
+    /**
+     * @param string $key
+     * @param string $value
+     * @param array $options
+     * @throws Exception
+     */
+    public function setCookie(string $key, string $value, array $options = [])
+    {
+        $known_options = ['ttl', 'expires', 'path', 'domain', 'secure', 'httponly', 'samesite'];
+        if ($unknown_options = array_diff(array_keys($options), $known_options)) {
+            throw new Exception(sprintf(
+                'Unknown options passed to setCookie: %s',
+                implode(', ', $unknown_options)
+            ));
+        }
+
+        if (array_key_exists('ttl', $options) && array_key_exists('expires', $options)) {
+            throw new Exception("Only one of 'ttl' and 'expires' options can be passed to setCookie");
+        }
+
+        if (array_key_exists('ttl', $options)) {
+            $options['expires'] = strtotime($options['ttl']);
+            unset($options['ttl']);
+        }
+
+        $this->cookies[$key] = ['value' => $value, 'options' => $options];
+    }
+
     public function isRedirect(): bool
     {
         return $this->status_code === 302;
@@ -100,6 +135,9 @@ class Response implements ResponseWriterInterface
             'header' => function (string $header) {
                 header($header);
             },
+            'cookie' => function (string $key, string $value, array $options) {
+                setcookie($key, $value, $options);
+            },
             'body'   => function (string $data) {
                 echo $data;
             }
@@ -111,6 +149,10 @@ class Response implements ResponseWriterInterface
             foreach ($this->session as $key => $value) {
                 $_SESSION[$key] = $value;
             }
+        }
+
+        foreach ($this->cookies as $key => $cookie) {
+            setcookie($key, $cookie['value'], $cookie['options']);
         }
 
         foreach ($this->headers as $name => $value) {

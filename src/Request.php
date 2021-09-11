@@ -35,6 +35,16 @@ class Request implements RequestInterface, Form\RequestInterface
         return $_SESSION[$key] ?? $default;
     }
 
+    /**
+     * @param string $key
+     * @param string|null $default
+     * @return mixed
+     */
+    public function getCookie(string $key, string $default = null)
+    {
+        return $_COOKIE[$key] ?? $default;
+    }
+
     public function getHeader(string $key): string
     {
         $headers = $this->getHeaders();
