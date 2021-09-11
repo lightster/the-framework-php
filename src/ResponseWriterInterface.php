@@ -23,4 +23,11 @@ interface ResponseWriterInterface extends WriterInterface
      * @return void
      */
     public function setSessionParam(string $key, string $value);
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @param array $options
+     */
+    public function setCookie(string $key, string $value, array $options = []);
 }
