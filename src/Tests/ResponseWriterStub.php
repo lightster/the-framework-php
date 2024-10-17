@@ -37,4 +37,8 @@ class ResponseWriterStub implements ResponseWriterInterface
     {
         return $this->data !== '';
     }
+
+    public function setCookie(string $key, string $value, array $options = []): void
+    {
+    }
 }

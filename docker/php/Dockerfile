@@ -25,7 +25,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del --no-cache .build-deps
 
 RUN curl -sS https://getcomposer.org/installer >composer-setup.php \
-    && echo "756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3 composer-setup.php" >composer-setup.php.sha384 \
+    && echo "dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6 composer-setup.php" >composer-setup.php.sha384 \
     && sha384sum --check composer-setup.php.sha384 \
     && php composer-setup.php --quiet --install-dir=/usr/local/bin --filename=composer \
     && rm composer-setup.php composer-setup.php.sha384

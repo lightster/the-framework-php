@@ -28,4 +28,9 @@ class RequestStub implements RequestInterface, FormRequestInterface
     {
         return $this->headers[$key] ?? '';
     }
+
+    public function getCookie(string $key, ?string $default = null): ?string
+    {
+        return $default;
+    }
 }
