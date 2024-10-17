@@ -26,6 +26,15 @@ class Response implements ResponseWriterInterface
      */
     private $session = [];
 
+
+    /**
+     *
+     */
+    public function getStatusCode()
+    {
+        return $this->status_code;
+    }
+
     /**
      * @var array
      */

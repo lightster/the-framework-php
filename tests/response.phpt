@@ -38,6 +38,8 @@ test("output response csv", function ($t) {
 
     $body_output = '';
     $response->output([
+        'code' => function (int $status_code) {
+        },
         'body' => function ($body) use (&$body_output) {
             $body_output = $body;
         },
